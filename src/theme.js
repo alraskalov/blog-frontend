@@ -14,3 +14,5 @@ export const theme = createTheme({
     },
   },
 });
+
+theme.shadows[1] = theme.shadows[0];
