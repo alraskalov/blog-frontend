@@ -26,14 +26,21 @@ export const Login = () => {
     mode: 'onChange',
   });
 
-  const onSubmit = (values) => {
-    dispatch(fetchSignin(values));
+  const onSubmit = async (values) => {
+    const data = await dispatch(fetchSignin(values));
+    if ('token' in data.payload) {
+      localStorage.setItem('token', data.payload.token);
+    }
+
+    if(!data.payload) {
+      return alert('Не удалось авторизоваться');
+    }
   };
 
   if (isAuth) {
     return <Navigate to="/" />;
   }
-  
+
   return (
     <Paper classes={{ root: styles.root }}>
       <Typography classes={{ root: styles.title }} variant="h5">
