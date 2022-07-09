@@ -1,6 +1,6 @@
 import React from 'react';
 import Button from '@mui/material/Button';
-import { Link } from 'react-router-dom';
+import { Link, Navigate } from 'react-router-dom';
 import styles from './Header.module.scss';
 import Container from '@mui/material/Container';
 import { logout, selectIsAuth } from '../../redux/slices/auth';
@@ -14,6 +14,7 @@ export const Header = () => {
     if (window.confirm('Вы действительно хотите выйти?')) {
       dispatch(logout());
       localStorage.removeItem('token');
+      return <Navigate to="/" />;
     }
   };
 
@@ -27,7 +28,7 @@ export const Header = () => {
           <div className={styles.buttons}>
             {isAuth ? (
               <>
-                <Link to="/posts/create">
+                <Link to="/add-post">
                   <Button variant="contained">Написать статью</Button>
                 </Link>
                 <Button

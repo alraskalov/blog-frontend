@@ -3,17 +3,18 @@ import Container from '@mui/material/Container';
 
 import { Header } from './components';
 import { Home, FullPost, Registration, AddPost, Login } from './pages';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { useEffect } from 'react';
-import { fetchAuthMe, selectIsAuth } from './redux/slices/auth';
+import { fetchAuthMe } from './redux/slices/auth';
 
 function App() {
   const dispatch = useDispatch();
-  const isAuth = useSelector(selectIsAuth)
 
   useEffect(() => {
-    dispatch(fetchAuthMe())
-  }, [])
+    if (localStorage.getItem('token')) {
+      dispatch(fetchAuthMe());
+    }
+  }, []);
   return (
     <>
       <Header />

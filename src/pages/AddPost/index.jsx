@@ -6,8 +6,12 @@ import SimpleMDE from 'react-simplemde-editor';
 
 import 'easymde/dist/easymde.min.css';
 import styles from './AddPost.module.scss';
+import { useSelector } from 'react-redux';
+import { selectIsAuth } from '../../redux/slices/auth';
+import { Navigate } from 'react-router-dom';
 
 export const AddPost = () => {
+  const isAuth = useSelector(selectIsAuth);
   const imageUrl = '';
   const [value, setValue] = React.useState('');
 
@@ -31,8 +35,12 @@ export const AddPost = () => {
         delay: 1000,
       },
     }),
-    [],
+    []
   );
+
+  if (!isAuth) {
+    return <Navigate to="/" />;
+  }
 
   return (
     <Paper style={{ padding: 30 }}>
@@ -46,7 +54,11 @@ export const AddPost = () => {
         </Button>
       )}
       {imageUrl && (
-        <img className={styles.image} src={`http://localhost:4444${imageUrl}`} alt="Uploaded" />
+        <img
+          className={styles.image}
+          src={`http://localhost:4444${imageUrl}`}
+          alt="Uploaded"
+        />
       )}
       <br />
       <br />
@@ -56,13 +68,23 @@ export const AddPost = () => {
         placeholder="Заголовок статьи..."
         fullWidth
       />
-      <TextField classes={{ root: styles.tags }} variant="standard" placeholder="Тэги" fullWidth />
-      <SimpleMDE className={styles.editor} value={value} onChange={onChange} options={options} />
+      <TextField
+        classes={{ root: styles.tags }}
+        variant="standard"
+        placeholder="Тэги"
+        fullWidth
+      />
+      <SimpleMDE
+        className={styles.editor}
+        value={value}
+        onChange={onChange}
+        options={options}
+      />
       <div className={styles.buttons}>
         <Button size="large" variant="contained">
           Опубликовать
         </Button>
-        <a href="/">
+        <a href="/" className={styles.link}>
           <Button size="large">Отмена</Button>
         </a>
       </div>
