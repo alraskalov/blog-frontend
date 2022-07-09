@@ -13,10 +13,10 @@ import { Navigate } from 'react-router-dom';
 export const Login = () => {
   const isAuth = useSelector(selectIsAuth);
   const dispatch = useDispatch();
+
   const {
     register,
     handleSubmit,
-    setError,
     formState: { errors, isValid },
   } = useForm({
     defaultValues: {
@@ -32,8 +32,8 @@ export const Login = () => {
       localStorage.setItem('token', data.payload.token);
     }
 
-    if(!data.payload) {
-      return alert('Не удалось авторизоваться');
+    if (!data.payload) {
+      return alert('Не удалось зарегестрироваться');
     }
   };
 
@@ -64,7 +64,13 @@ export const Login = () => {
           {...register('password', { required: 'Укажите пароль' })}
           fullWidth
         />
-        <Button type="submit" size="large" variant="contained" fullWidth>
+        <Button
+          disabled={!isValid}
+          type="submit"
+          size="large"
+          variant="contained"
+          fullWidth
+        >
           Войти
         </Button>
       </form>
