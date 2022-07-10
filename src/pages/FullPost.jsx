@@ -7,6 +7,7 @@ import { useParams } from 'react-router-dom';
 import { useState } from 'react';
 import { useEffect } from 'react';
 import axios from '../axios';
+import ReactMarkdown from 'react-markdown';
 
 export const FullPost = () => {
   const [post, setPost] = useState();
@@ -34,7 +35,7 @@ export const FullPost = () => {
       <Post
         id={post._id}
         title={post.title}
-        imageUrl={post.imageUrl}
+        imageUrl={`http://localhost:3000${post.imageUrl}`}
         user={post.owner}
         createdAt={post.createdAt}
         viewsCount={post.viewsCount}
@@ -42,7 +43,7 @@ export const FullPost = () => {
         tags={post.tags}
         isFullPost
       >
-        <p>{post.text}</p>
+        <ReactMarkdown children={post.text} />
       </Post>
       <CommentsBlock
         items={[
