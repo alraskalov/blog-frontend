@@ -1,4 +1,4 @@
-import React, { useCallback, useMemo } from 'react';
+import React, { useCallback, useEffect, useMemo } from 'react';
 import TextField from '@mui/material/TextField';
 import Paper from '@mui/material/Paper';
 import Button from '@mui/material/Button';
@@ -8,33 +8,36 @@ import 'easymde/dist/easymde.min.css';
 import styles from './AddPost.module.scss';
 import { useSelector } from 'react-redux';
 import { selectIsAuth } from '../../redux/slices/auth';
-import { Navigate, useNavigate } from 'react-router-dom';
+import { Navigate, useNavigate, useParams } from 'react-router-dom';
 import { useState } from 'react';
 import { useRef } from 'react';
 import axios from '../../axios';
 
 export const AddPost = () => {
+  const { id } = useParams();
   const isAuth = useSelector(selectIsAuth);
   const navigate = useNavigate();
-  const [isLoading, setIsLoading] = useState(false);
   const [imageUrl, setImageUrl] = useState('');
   const [text, setText] = useState('');
   const [title, setTitle] = useState('');
   const [tags, setTags] = useState('');
   const inputRef = useRef(null);
 
+  const isEdit = Boolean(id);
+
   const onSubmit = async () => {
     try {
-      setIsLoading(true);
       const fields = {
         title,
         imageUrl,
-        tags: tags.split(' '),
+        tags: tags.trim().split(' '),
         text,
       };
-      const { data } = await axios.post('/posts', fields);
-      const id = data._id;
-      navigate(`/posts/${id}`);
+      const { data } = isEdit
+        ? await axios.patch(`/posts/${id}`, fields)
+        : await axios.post('/posts', fields);
+      const _id = isEdit ? id : data._id;
+      navigate(`/posts/${_id}`);
     } catch (error) {
       console.warn(error);
       alert('Ошибка при создании статьи');
@@ -76,6 +79,18 @@ export const AddPost = () => {
     }),
     []
   );
+
+  useEffect(() => {
+    if (id) {
+      axios.get(`/posts/${id}`).then(({ data }) => {
+        const { text, title, tags, imageUrl } = data;
+        setTitle(title);
+        setImageUrl(imageUrl);
+        setTags(tags.join(' '));
+        setText(text);
+      });
+    }
+  }, [id]);
 
   if (!localStorage.getItem('token') && !isAuth) {
     return <Navigate to="/" />;
@@ -129,7 +144,7 @@ export const AddPost = () => {
       />
       <div className={styles.buttons}>
         <Button size="large" onClick={onSubmit} variant="contained">
-          Опубликовать
+          {isEdit ? 'Редактировать' : 'Опубликовать'}
         </Button>
         <a href="/" className={styles.link}>
           <Button size="large">Отмена</Button>
