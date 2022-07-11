@@ -68,8 +68,8 @@ export const Post = ({
             {isFullPost ? title : <Link to={`/posts/${_id}`}>{title}</Link>}
           </h2>
           <ul className={styles.tags}>
-            {tags.map((name) => (
-              <li key={name}>
+            {tags.map((name, i) => (
+              <li key={name + i}>
                 <Link to={`/tag/${name}`}>#{name}</Link>
               </li>
             ))}

@@ -29,12 +29,10 @@ export const Registration = () => {
   
   const onSubmit = async (values) => {
     const data = await dispatch(fetchSignup(values));
-    if ('token' in data.payload) {
+    if (data.payload) {
       localStorage.setItem('token', data.payload.token);
-    }
-
-    if (!data.payload) {
-      return alert('Не удалось авторизоваться');
+    } else {
+      return alert('Не удалось зарегестрироваться');
     }
   };
 

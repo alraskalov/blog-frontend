@@ -13,7 +13,6 @@ export const Home = () => {
   const dispatch = useDispatch();
   const owner = useSelector((state) => state.auth.data);
   const { posts, tags } = useSelector((state) => state.posts);
-
   const isPostsLoading = posts.status === 'loading';
   const isTagsLoading = tags.status === 'loading';
 

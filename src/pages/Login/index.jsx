@@ -28,12 +28,11 @@ export const Login = () => {
 
   const onSubmit = async (values) => {
     const data = await dispatch(fetchSignin(values));
-    if ('token' in data.payload) {
+    if (data.payload) {
       localStorage.setItem('token', data.payload.token);
-    }
+    } else {
+      return alert('Не удалось авторизоваться');
 
-    if (!data.payload) {
-      return alert('Не удалось зарегестрироваться');
     }
   };
 
