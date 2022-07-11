@@ -1,6 +1,8 @@
 # Проект React Blog - приложение для ведения блога
 
-Ссылка на репозиторий бэкенда : **[React Blog API](https://github.com/alraskalov/blog-backend)**
+Ссылка на проект: **[React Blog](https://blog-frontend-opal.vercel.app/)**
+
+Ссылка на репозиторий бэкенда: **[React Blog API](https://github.com/alraskalov/blog-backend)**
 
 ## 🧰 Экосистема
 
