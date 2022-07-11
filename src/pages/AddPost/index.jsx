@@ -4,6 +4,7 @@ import Paper from '@mui/material/Paper';
 import Button from '@mui/material/Button';
 import SimpleMDE from 'react-simplemde-editor';
 
+import { API_CONFIG } from '../../utils/utils';
 import 'easymde/dist/easymde.min.css';
 import styles from './AddPost.module.scss';
 import { useSelector } from 'react-redux';
@@ -114,7 +115,7 @@ export const AddPost = () => {
       {imageUrl && (
         <img
           className={styles.image}
-          src={`http://localhost:3000${imageUrl}`}
+          src={`${API_CONFIG.URL_API}${imageUrl}`}
           alt="Uploaded"
         />
       )}

@@ -3,6 +3,7 @@ import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import Grid from '@mui/material/Grid';
 
+import { API_CONFIG } from '../utils/utils';
 import { Post } from '../components/Post';
 import { TagsBlock } from '../components/TagsBlock';
 import { CommentsBlock } from '../components/CommentsBlock';
@@ -42,7 +43,7 @@ export const Home = () => {
                 _id={post._id}
                 title={post.title}
                 imageUrl={
-                  post.imageUrl ? `http://localhost:3000${post.imageUrl}` : ''
+                  post.imageUrl ? `${API_CONFIG.URL_API}${post.imageUrl}` : ''
                 }
                 user={post.owner}
                 createdAt={post.createdAt}

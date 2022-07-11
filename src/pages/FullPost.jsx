@@ -1,4 +1,6 @@
 import React from 'react';
+import { API_CONFIG } from '../utils/utils';
+
 
 import { Post } from '../components/Post';
 import { Index } from '../components/AddComment';
@@ -34,7 +36,7 @@ export const FullPost = () => {
       <Post
         id={post._id}
         title={post.title}
-        imageUrl={post.imageUrl ? `http://localhost:3000${post.imageUrl}` : ''}
+        imageUrl={post.imageUrl ? `${API_CONFIG.URL_API}${post.imageUrl}` : ''}
         user={post.owner}
         createdAt={post.createdAt}
         viewsCount={post.viewsCount}
